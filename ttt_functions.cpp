@@ -1,7 +1,6 @@
 #include <iostream>
-#include <vector>
 #include <random>
-
+#include "ttt.hpp"
 
 // --------------------------------------------------
 void display_board(std::vector<std::vector<char>> board) {
@@ -56,7 +55,7 @@ void welcome(std::string &playerOne, std::string &playerTwo, int &turnNumber) {
 
 
 // --------------------------------------------------
-void playerTurn(std::string playerOne, std::string playerTwo, int turnNumber, std::vector<std::vector<char>> &board) {
+void playerTurn(std::string playerOne, std::string playerTwo, int &turnNumber, std::vector<std::vector<char>> &board) {
   int row;
   int col;
 
@@ -73,7 +72,7 @@ void playerTurn(std::string playerOne, std::string playerTwo, int turnNumber, st
 
     std::cout << "Select Column: ";
     std::cin >> col;
-    while(col < 1 || col > 3) {
+    while(col < 1 || col > 3 || board[row - 1][col - 1] != '*') {
       std::cout << "\n";
       std::cout << "Invalid Input\n";
       std::cout << "Select New Column: ";
@@ -82,6 +81,7 @@ void playerTurn(std::string playerOne, std::string playerTwo, int turnNumber, st
 
     board[row - 1][col - 1] = 'X';
     turnNumber += 1;
+    std::cout << "\n";
     
   } else {
     std::cout << playerTwo << "'s Turn: \n";
@@ -96,7 +96,7 @@ void playerTurn(std::string playerOne, std::string playerTwo, int turnNumber, st
 
     std::cout << "Select Column: ";
     std::cin >> col;
-    while(col < 1 || col > 3) {
+    while(col < 1 || col > 3 || board[row - 1][col - 1] != '*') {
       std::cout << "\n";
       std::cout << "Invalid Input\n";
       std::cout << "Select New Column: ";
@@ -105,7 +105,37 @@ void playerTurn(std::string playerOne, std::string playerTwo, int turnNumber, st
 
     board[row - 1][col - 1] = 'O';
     turnNumber += 1;
+    std::cout << "\n";
     
   }
+}
+// --------------------------------------------------
+
+
+// --------------------------------------------------
+bool check_winner(std::vector<std::vector<char>> board) {
+  // Check rows
+  for(int row = 0; row < board.size(); row++) {
+    if(board[row][0] != '*' && board[row][0] == board[row][1] && board[row][1] == board[row][2]) {
+      return true;
+    }
+  }
+
+  // Check columns
+  for(int col = 0; col < board[0].size(); col++) {
+    if(board[0][col] != '*' && board[0][col] == board[1][col] && board[1][col] == board[2][col]) {
+      return true;
+    }
+  }
+
+  // Check diagonals
+  if(board[0][0] != '*' && board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
+    return true;
+  }
+  if(board[0][2] != '*' && board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
+    return true;
+  }
+
+  return false;
 }
 // --------------------------------------------------
