@@ -25,3 +25,9 @@ Then run it with:
 - ttt.cpp - main program entry point
 - ttt.hpp - function declarations
 - ttt_functions.cpp - game logic and board functions
+
+## What I learned
+- C++ functions and header files
+- Input validation
+- Arrays/game-state management
+- Basic Git/GitHub workflow
